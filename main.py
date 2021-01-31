@@ -14,8 +14,7 @@ class Project(db.Model):
     title = db.Column(db.String(100))
     start_date = db.Column(db.Date)
     end_date = db.Column(db.Date)
-    # JSON.stringify; массив оъектов класса User
-    participants = db.Column(db.String(100))
+    participants = db.Column(db.String(100))  # JSON.stringify; массив оъектов класса User
     complete = db.Column(db.Boolean)
     responsible_user = db.Column(db.String(100))  # id from User
 
@@ -44,12 +43,23 @@ class Task(db.Model):
     project_id = db.Column(db.String(100))
 
 
+def check_token(token: str) -> bool:
+    return bool(User.query.get(token))
+
+
 @app.route('/')
 def home():
     token = request.headers.get('token')
     print(token)
-    print(User.query.get(token))
+    print(check_token(token))
     return jsonify({'success': True})
+
+
+@app.route('/projects')
+def get_projects():
+    if check_token(request.headers.get('token')):
+        return jsonify(Project.query.all())
+
 
 
 if __name__ == "__main__":
