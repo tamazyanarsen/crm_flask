@@ -35,13 +35,13 @@ class Task(db.Model):
     fact_time = db.Column(db.Integer)
     price = db.Column(db.Float)
     start_date = db.Column(db.Date)
-    end_date = db.Column(db.Date)
-    # JSON.stringify; массив оъектов класса User
+    end_date = db.Column(db.Date)  # JSON.stringify; массив оъектов класса User
     participants = db.Column(db.String(100))
     complete = db.Column(db.Boolean)
-    responsible_user = db.Column(db.String(100))  # id from User
+    responsible_user_id = db.Column(db.String(100))
     comments = db.Column(db.String(1000))  # JSON.stringify(comments_array)
     status = db.Column(db.String(100))  # open, close, work
+    project_id = db.Column(db.String(100))
 
 
 @app.route('/')
